@@ -1,0 +1,47 @@
+#docker-compose.ymlのバージョン
+version: '3.8'
+#docker volumeの設定
+volumes:
+  docker-volume:
+
+#services以下に各コンテナの設定を書く
+services:
+  #Webサーバーのコンテナ
+  web:
+    image: nginx:1.19
+    ports:
+      - '1500:80'
+    depends_on:
+      - app
+    volumes:
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - .:/var/www/html
+  #アプリケーションのコンテナ
+  app:
+    build: ./docker/php
+    volumes:
+      - .:/var/www/html
+  #データベースのコンテナ
+  db:
+    image: mysql:8.0
+    ports:
+      - '3350:3306'
+    environment:
+      MYSQL_DATABASE: ever_noter
+      MYSQL_USER: ever_shota
+      MYSQL_PASSWORD: ever_notes
+      MYSQL_ROOT_PASSWORD: root
+      TZ: 'Asia/Tokyo'
+    volumes:
+      - docker-volume:/var/lib/mysql
+  # phpMyAdmin
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    environment:
+    - PMA_ARBITRARY=1
+    - PMA_HOSTS=db
+    - PMA_USER=ever_shota
+    - PMA_PASSWORD=ever_notes
+    ports:
+    - 8490:80
