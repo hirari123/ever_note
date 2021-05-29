@@ -27,9 +27,9 @@ services:
     ports:
       - '3350:3306'
     environment:
-      MYSQL_DATABASE: ever_noter
-      MYSQL_USER: ever_shota
-      MYSQL_PASSWORD: ever_notes
+      MYSQL_DATABASE: evernoter
+      MYSQL_USER: evershota
+      MYSQL_PASSWORD: evernotes
       MYSQL_ROOT_PASSWORD: root
       TZ: 'Asia/Tokyo'
     volumes:
@@ -41,7 +41,7 @@ services:
     environment:
     - PMA_ARBITRARY=1
     - PMA_HOSTS=db
-    - PMA_USER=ever_shota
-    - PMA_PASSWORD=ever_notes
+    - PMA_USER=evershota
+    - PMA_PASSWORD=evernotes
     ports:
     - 8490:80
